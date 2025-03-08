@@ -3,7 +3,7 @@
 	import SortSelector from './SortSelector.svelte';
 	import TagsNav from './TagsNav.svelte';
 	import type { Tag } from '@prisma/client';
-
+	import { SidebarTrigger } from '$lib/components/ui/sidebar';
 	type TagWithCount = Pick<Tag, 'name' | 'color'> & {
 		count: number;
 	};
@@ -48,7 +48,10 @@
 </script>
 
 <div class="flex flex-col gap-4 py-2 md:flex-row md:items-center md:justify-between">
-	<SearchBar onSearch={handleSearch} />
+	<div class="flex w-full items-center gap-2 md:w-auto md:flex-1">
+		<SidebarTrigger class="size-8 md:hidden [&_svg]:size-6" />
+		<SearchBar onSearch={handleSearch} />
+	</div>
 	<SortSelector
 		initialField={sortField}
 		initialDirection={sortDirection}

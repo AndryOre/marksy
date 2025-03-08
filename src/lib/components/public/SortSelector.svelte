@@ -44,7 +44,6 @@
 
 	const DirectionIcon = $derived(direction === 'asc' ? ArrowUpNarrowWide : ArrowDownNarrowWide);
 
-	// Textos dinámicos para las opciones del menú
 	const dateOptionText = $derived(
 		field === 'date' && direction === 'asc' ? 'Date (Oldest)' : 'Date (Newest)'
 	);

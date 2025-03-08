@@ -123,7 +123,7 @@
 								<div class="flex w-full items-center justify-between">
 									<div class="flex items-center gap-2">
 										<FolderIcon class="h-5 w-5" />
-										<span class="text-lg">{category.title}</span>
+										<span class="max-w-32 truncate text-lg">{category.title}</span>
 									</div>
 									<Badge
 										variant="secondary"
