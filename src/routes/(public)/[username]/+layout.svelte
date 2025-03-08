@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import AppSidebar from '$lib/components/public/CategorySidebar.svelte';
+	import ScrollToTop from '$lib/components/ui/ScrollToTop.svelte';
 	import { goto } from '$app/navigation';
 
 	let { data, children } = $props();
@@ -32,4 +33,5 @@
 			{@render children?.()}
 		</main>
 	</Sidebar.Provider>
+	<ScrollToTop />
 </div>
