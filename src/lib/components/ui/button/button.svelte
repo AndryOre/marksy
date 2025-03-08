@@ -2,6 +2,12 @@
 	import type { WithElementRef } from 'bits-ui';
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 	import { type VariantProps, tv } from 'tailwind-variants';
+	import {
+		Tooltip,
+		TooltipContent,
+		TooltipProvider,
+		TooltipTrigger
+	} from '$lib/components/ui/tooltip';
 
 	export const buttonVariants = tv({
 		base: 'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
@@ -34,6 +40,8 @@
 		WithElementRef<HTMLAnchorAttributes> & {
 			variant?: ButtonVariant;
 			size?: ButtonSize;
+			tooltip?: string;
+			tooltipSide?: 'top' | 'right' | 'bottom' | 'left';
 		};
 </script>
 
@@ -47,12 +55,43 @@
 		ref = $bindable(null),
 		href = undefined,
 		type = 'button',
+		tooltip = undefined,
+		tooltipSide = 'top',
 		children,
 		...restProps
 	}: ButtonProps = $props();
 </script>
 
-{#if href}
+{#if tooltip}
+	<TooltipProvider>
+		<Tooltip>
+			<TooltipTrigger>
+				{#if href}
+					<a
+						bind:this={ref}
+						class={cn(buttonVariants({ variant, size }), className)}
+						{href}
+						{...restProps}
+					>
+						{@render children?.()}
+					</a>
+				{:else}
+					<button
+						bind:this={ref}
+						class={cn(buttonVariants({ variant, size }), className)}
+						{type}
+						{...restProps}
+					>
+						{@render children?.()}
+					</button>
+				{/if}
+			</TooltipTrigger>
+			<TooltipContent side={tooltipSide}>
+				<p>{tooltip}</p>
+			</TooltipContent>
+		</Tooltip>
+	</TooltipProvider>
+{:else if href}
 	<a bind:this={ref} class={cn(buttonVariants({ variant, size }), className)} {href} {...restProps}>
 		{@render children?.()}
 	</a>
