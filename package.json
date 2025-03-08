@@ -66,7 +66,9 @@
 		]
 	},
 	"dependencies": {
+		"@icons-pack/svelte-simple-icons": "^5.0.0",
 		"@prisma/client": "6.4.1",
+		"add": "^2.0.6",
 		"date-fns": "^4.1.0",
 		"dotenv": "^16.4.7",
 		"mode-watcher": "^0.5.1"

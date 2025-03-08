@@ -3,7 +3,7 @@
 	import AppSidebar from '$lib/components/public/CategorySidebar.svelte';
 	import ScrollToTop from '$lib/components/public/ScrollToTop.svelte';
 	import { goto } from '$app/navigation';
-
+	import ProfileBanner from '$lib/components/public/ProfileBanner.svelte';
 	let { data, children } = $props();
 
 	const categories = $derived(data.categories || []);
@@ -24,9 +24,7 @@
 </script>
 
 <div class="flex flex-col">
-	<header class="flex h-96 w-full items-center justify-center border-b border-border bg-muted px-4">
-		<h1 class="text-5xl font-medium">Banner</h1>
-	</header>
+	<ProfileBanner />
 	<Sidebar.Provider>
 		<AppSidebar {categories} {selectedCategoryId} onSelectCategory={handleSelectCategory} />
 		<main class="w-full">
