@@ -4,6 +4,7 @@
 	import TagsNav from '$lib/components/public/TagsNav.svelte';
 	import SearchBar from '$lib/components/public/SearchBar.svelte';
 	import SortSelector from '$lib/components/public/SortSelector.svelte';
+	import BookmarkFilters from '$lib/components/public/BookmarkFilters.svelte';
 	import type { Bookmark, Tag } from '@prisma/client';
 	import { format } from 'date-fns';
 
@@ -148,16 +149,16 @@
 
 <div class="flex">
 	<div class="w-full flex-1 px-4">
-		<div class="flex flex-col gap-4 py-2 md:flex-row md:items-center md:justify-between">
-			<SearchBar onSearch={handleSearch} />
-			<SortSelector
-				initialField={sortField}
-				initialDirection={sortDirection}
-				onChange={handleSortChange}
-			/>
-		</div>
-
-		<TagsNav tags={allTags} {selectedTags} onTagSelect={handleTagSelect} loading={loadingTags} />
+		<BookmarkFilters
+			{allTags}
+			{selectedTags}
+			{loadingTags}
+			{sortField}
+			{sortDirection}
+			onSearch={handleSearch}
+			onSort={handleSortChange}
+			onTagSelect={(e) => handleTagSelect(e.tag, e.selected)}
+		/>
 
 		{#if loadingBookmarks}
 			<div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:grid-cols-3">
