@@ -15,6 +15,7 @@ model Bookmark {
   title        String
   url          String
   description  String?
+  imageUrl     String?
   category     Category      @relation(fields: [categoryId], references: [id])
   categoryId   String
   dateAdded    DateTime      @default(now())

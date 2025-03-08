@@ -24,8 +24,8 @@
 
 <Sidebar.Provider>
 	<AppSidebar {categories} {selectedCategoryId} onSelectCategory={handleSelectCategory} />
-	<main>
-		<Sidebar.Trigger />
+	<main class="w-full">
+		<Sidebar.Trigger class="size-8 [&_svg]:size-6" />
 		{@render children?.()}
 	</main>
 </Sidebar.Provider>

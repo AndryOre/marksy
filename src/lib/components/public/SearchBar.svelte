@@ -12,7 +12,7 @@
 		searchTerm: z.string().max(50)
 	});
 
-	let { placeholder = 'Buscar bookmarks...', onSearch } = $props<{
+	let { placeholder = 'Buscar', onSearch } = $props<{
 		placeholder?: string;
 		onSearch: (searchTerm: string) => void;
 	}>();
@@ -24,21 +24,17 @@
 
 	const { form: formData, enhance } = form;
 
-	// Variable para almacenar el último término de búsqueda procesado
 	let lastProcessedTerm = $state('');
 
 	$effect(() => {
 		const currentTerm = $formData.searchTerm || '';
 
-		// Solo procesar si el término ha cambiado
 		if (currentTerm !== lastProcessedTerm) {
-			console.log('effect triggered', currentTerm);
 			lastProcessedTerm = currentTerm;
 
 			if (currentTerm === '') {
 				onSearch('');
 			} else if (currentTerm.length >= 2) {
-				console.log('calling search with:', currentTerm);
 				onSearch(currentTerm);
 			}
 		}

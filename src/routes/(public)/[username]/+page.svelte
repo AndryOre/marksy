@@ -5,7 +5,6 @@
 	import SearchBar from '$lib/components/public/SearchBar.svelte';
 	import SortSelector from '$lib/components/public/SortSelector.svelte';
 	import type { Bookmark, Tag } from '@prisma/client';
-	import { Loader2 } from 'lucide-svelte';
 	import { format } from 'date-fns';
 
 	type BookmarkWithTags = Omit<Bookmark, 'tags'> & {
@@ -16,11 +15,9 @@
 		count: number;
 	};
 
-	// Obtener datos del layout
 	let { data } = $props();
 	const selectedCategoryId = $derived(data.selectedCategoryId);
 
-	// Estado base
 	let bookmarks = $state<BookmarkWithTags[]>([]);
 	let allTags = $state<TagWithCount[]>([]);
 	let selectedTags = $state<string[]>([]);
@@ -32,9 +29,7 @@
 	let loadingBookmarks = $state(true);
 	let loadingTags = $state(true);
 
-	// Actualizar filteredBookmarks cuando cambian las dependencias
 	$effect(() => {
-		// Primero filtrar por búsqueda
 		let filtered = searchTerm.trim()
 			? bookmarks.filter((bookmark) => {
 					const normalizedSearchTerm = searchTerm.toLowerCase().trim();
@@ -47,7 +42,6 @@
 				})
 			: [...bookmarks];
 
-		// Luego ordenar
 		if (sortField === 'date') {
 			filtered.sort((a, b) => {
 				const dateA = new Date(a.dateAdded).getTime();
@@ -86,7 +80,6 @@
 		loadingBookmarks = true;
 		const url = new URL('/api/bookmarks', window.location.origin);
 
-		// Usar el selectedCategoryId del layout
 		if (selectedCategoryId) {
 			url.searchParams.set('categoryId', selectedCategoryId);
 		}
@@ -101,10 +94,8 @@
 
 			if (result.success) {
 				if (selectedCategoryId || selectedTags.length > 0) {
-					// Si hay filtros, la API devuelve un array plano de bookmarks
 					bookmarks = result.data as BookmarkWithTags[];
 				} else {
-					// Si no hay filtros, la API devuelve categorías con bookmarks anidados
 					bookmarks = result.data.flatMap(
 						(cat: { bookmarks: BookmarkWithTags[] }) => cat.bookmarks
 					);
@@ -143,7 +134,6 @@
 		sortDirection = direction;
 	}
 
-	// Efecto para cargar bookmarks cuando cambia la categoría seleccionada
 	$effect(() => {
 		if (selectedCategoryId !== undefined) {
 			fetchBookmarks();
@@ -156,33 +146,24 @@
 	});
 </script>
 
-<div class="flex h-[calc(100vh-4rem)]">
-	<main class="flex-1 overflow-y-auto">
-		<div class="p-4">
-			<div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-				<SearchBar onSearch={handleSearch} />
-				<SortSelector
-					initialField={sortField}
-					initialDirection={sortDirection}
-					onChange={handleSortChange}
-				/>
-			</div>
+<div class="flex">
+	<div class="w-full flex-1 px-4">
+		<div class="flex flex-col gap-4 py-2 md:flex-row md:items-center md:justify-between">
+			<SearchBar onSearch={handleSearch} />
+			<SortSelector
+				initialField={sortField}
+				initialDirection={sortDirection}
+				onChange={handleSortChange}
+			/>
 		</div>
 
-		{#if loadingTags}
-			<div class="flex justify-center p-4">
-				<Loader2 class="h-6 w-6 animate-spin text-primary" />
-			</div>
-		{:else}
-			<TagsNav tags={allTags} {selectedTags} onTagSelect={handleTagSelect} />
-		{/if}
+		<TagsNav tags={allTags} {selectedTags} onTagSelect={handleTagSelect} loading={loadingTags} />
 
 		{#if loadingBookmarks}
-			<div class="flex h-[calc(100vh-12rem)] items-center justify-center">
-				<div class="text-center">
-					<Loader2 class="mx-auto mb-4 h-12 w-12 animate-spin text-primary" />
-					<p class="text-muted-foreground">Cargando bookmarks...</p>
-				</div>
+			<div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:grid-cols-3">
+				{#each Array(6) as _}
+					<BookmarkCard title="" url="" tags={[]} dateAdded="" loading={true} />
+				{/each}
 			</div>
 		{:else if filteredBookmarks.length === 0}
 			<div class="flex h-[calc(100vh-12rem)] items-center justify-center">
@@ -196,20 +177,22 @@
 				</div>
 			</div>
 		{:else}
-			<div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each filteredBookmarks as bookmark (bookmark.url)}
+			<div class="grid grid-cols-1 gap-6 py-6 md:grid-cols-2 lg:grid-cols-3">
+				{#each filteredBookmarks as bookmark}
 					<BookmarkCard
 						title={bookmark.title}
 						url={bookmark.url}
+						imageUrl={bookmark.imageUrl ?? undefined}
 						tags={bookmark.tags.map((tag) => ({
 							name: tag.name,
 							color: tag.color || undefined
 						}))}
 						description={bookmark.description ?? undefined}
 						dateAdded={format(new Date(bookmark.dateAdded), 'MMMM d, yyyy')}
+						loading={false}
 					/>
 				{/each}
 			</div>
 		{/if}
-	</main>
+	</div>
 </div>

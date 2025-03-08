@@ -1,67 +1,118 @@
 <script lang="ts">
 	import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
-	import { ExternalLink } from 'lucide-svelte';
+	import { ExternalLink, Image } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { Skeleton } from '$lib/components/ui/skeleton';
+	import { cn } from '$lib/utils';
+	import { colorVariants, type ColorVariant } from '$lib/constants/colorVariants';
 
-	const { title, url, description, tags, dateAdded } = $props<{
+	const {
+		title,
+		url,
+		description,
+		imageUrl,
+		tags,
+		dateAdded,
+		loading = false
+	} = $props<{
 		title: string;
 		url: string;
 		description?: string;
+		imageUrl?: string;
 		tags: Array<{ name: string; color?: string }>;
 		dateAdded: string;
+		loading?: boolean;
 	}>();
+
+	function getTagClasses(tag: { color: string | null }): string {
+		if (!tag.color) return '';
+		const variant = colorVariants[tag.color as ColorVariant];
+		return variant.unselected;
+	}
 </script>
 
-<Card class="overflow-hidden">
-	<CardHeader class="p-0">
-		<a href={url} target="_blank" rel="noopener noreferrer" class="block">
-			<div class="relative aspect-[1.91/1] w-full overflow-hidden bg-[#f8f9fc]">
-				<div class="absolute inset-0 flex items-center justify-center">
-					<img
-						src="https://excalidraw.com/og-image-2.png"
-						alt={title}
-						class="h-full w-full object-cover"
-					/>
+{#if loading}
+	<Card class="overflow-hidden">
+		<CardHeader class="p-0">
+			<div class="aspect-[1.91/1] w-full bg-[#f8f9fc]">
+				<Skeleton class="h-full w-full rounded-none" />
+			</div>
+		</CardHeader>
+		<CardContent class="grid h-[240px] grid-rows-[auto_1fr_auto_auto] gap-4">
+			<div>
+				<Skeleton class="mb-2 h-7 w-3/4" />
+				<Skeleton class="h-4 w-full" />
+			</div>
+			<div>
+				<Skeleton class="mb-2 h-4 w-full" />
+				<Skeleton class="mb-2 h-4 w-full" />
+				<Skeleton class="h-4 w-2/3" />
+			</div>
+			<div class="flex flex-wrap gap-2">
+				{#each Array(3) as _}
+					<Skeleton class="h-6 w-16" />
+				{/each}
+			</div>
+			<Skeleton class="h-9 w-full" />
+		</CardContent>
+		<CardFooter>
+			<Skeleton class="h-4 w-24" />
+		</CardFooter>
+	</Card>
+{:else}
+	<Card class="overflow-hidden bg-neutral-100 dark:bg-neutral-900">
+		<CardHeader class="p-0">
+			<a href={url} target="_blank" rel="noopener noreferrer" class="group relative block">
+				<div class="aspect-[1.91/1] w-full">
+					<div class="flex h-full items-center justify-center">
+						<img src={imageUrl} alt={title} class="h-full w-full object-cover" />
+					</div>
+					<Button
+						variant="secondary"
+						size="sm"
+						onclick={() => window.open(url, '_blank', 'noopener,noreferrer')}
+						class="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100"
+					>
+						<ExternalLink class="mr-2 h-4 w-4" />
+						Visit site
+					</Button>
+				</div>
+			</a>
+		</CardHeader>
+		<CardContent class="flex flex-col gap-4">
+			<div>
+				<a href={url} target="_blank" rel="noopener noreferrer">
+					<CardTitle class="line-clamp-1 text-xl hover:underline">{title}</CardTitle>
+				</a>
+				<a href={url} target="_blank" rel="noopener noreferrer">
+					<p class="truncate text-sm text-muted-foreground hover:underline">{url}</p>
+				</a>
+			</div>
+			<p class="w-full truncate text-base">
+				{description || ''}
+			</p>
+			<div class="flex flex-col gap-2">
+				<div class="flex flex-wrap gap-2 overflow-hidden">
+					{#each tags as tag (tag.name)}
+						<Badge
+							variant="secondary"
+							class={cn(
+								'cursor-pointer text-sm transition-colors hover:opacity-80',
+								getTagClasses(tag)
+							)}
+						>
+							{tag.name.startsWith('#') ? tag.name : `#${tag.name}`}
+						</Badge>
+					{/each}
 				</div>
 			</div>
-		</a>
-	</CardHeader>
-	<CardContent class="grid h-[240px] grid-rows-[auto_1fr_auto_auto] gap-4 p-6">
-		<div>
-			<a href={url} target="_blank" rel="noopener noreferrer">
-				<CardTitle class="line-clamp-1 text-xl font-bold hover:underline">{title}</CardTitle>
-			</a>
-			<a href={url} target="_blank" rel="noopener noreferrer">
-				<p class="truncate text-sm text-muted-foreground hover:underline">{url}</p>
-			</a>
-		</div>
-		<p class="line-clamp-3 text-base text-muted-foreground">{description || ''}</p>
-		<div class="flex flex-wrap gap-2 overflow-hidden">
-			{#each tags as tag (tag.name)}
-				<Badge
-					variant="secondary"
-					class="text-sm"
-					style={tag.color ? `color: ${tag.color}; background-color: ${tag.color}10;` : ''}
-				>
-					{tag.name.startsWith('#') ? tag.name : `#${tag.name}`}
-				</Badge>
-			{/each}
-		</div>
-		<Button
-			variant="outline"
-			size="sm"
-			onclick={() => window.open(url, '_blank', 'noopener,noreferrer')}
-			class="w-full"
-		>
-			<ExternalLink class="mr-2 h-4 w-4" />
-			Visitar sitio
-		</Button>
-	</CardContent>
-	<CardFooter>
-		<p class="text-sm text-muted-foreground">{dateAdded}</p>
-	</CardFooter>
-</Card>
+		</CardContent>
+		<CardFooter>
+			<p class="text-sm text-muted-foreground">{dateAdded}</p>
+		</CardFooter>
+	</Card>
+{/if}
 
 <style>
 	:global(.dark) .bg-\[\#f8f9fc\] {
