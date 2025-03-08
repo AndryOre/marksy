@@ -22,10 +22,14 @@
 	}
 </script>
 
-<Sidebar.Provider>
-	<AppSidebar {categories} {selectedCategoryId} onSelectCategory={handleSelectCategory} />
-	<main class="w-full">
-		<Sidebar.Trigger class="size-8 [&_svg]:size-6" />
-		{@render children?.()}
-	</main>
-</Sidebar.Provider>
+<div class="flex flex-col">
+	<header class="flex h-96 w-full items-center justify-center border-b border-border bg-muted px-4">
+		<h1 class="text-5xl font-medium">Banner</h1>
+	</header>
+	<Sidebar.Provider>
+		<AppSidebar {categories} {selectedCategoryId} onSelectCategory={handleSelectCategory} />
+		<main class="w-full">
+			{@render children?.()}
+		</main>
+	</Sidebar.Provider>
+</div>
