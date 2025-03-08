@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { cn } from '$lib/utils.js';
-	import PanelLeft from 'lucide-svelte/icons/panel-left';
+	import { PanelLeftOpen, PanelLeftClose } from 'lucide-svelte';
 	import type { ComponentProps } from 'svelte';
 	import { useSidebar } from './context.svelte.js';
 
@@ -28,7 +28,12 @@
 	size="icon"
 	class={cn('h-7 w-7', className)}
 	{...restProps}
+	tooltip={sidebar.open ? 'Close Sidebar' : 'Open Sidebar'}
 >
-	<PanelLeft />
-	<span class="sr-only">Toggle Sidebar</span>
+	{#if sidebar.open}
+		<PanelLeftClose />
+	{:else}
+		<PanelLeftOpen />
+	{/if}
+	<span class="sr-only">{sidebar.open ? 'Close Sidebar' : 'Open Sidebar'}</span>
 </Button>
