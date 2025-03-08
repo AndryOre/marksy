@@ -30,6 +30,90 @@ async function main() {
 		}
 	});
 
+	const marketingCategory = await prisma.category.create({
+		data: {
+			title: 'Marketing'
+		}
+	});
+
+	const businessCategory = await prisma.category.create({
+		data: {
+			title: 'Business'
+		}
+	});
+
+	const educationCategory = await prisma.category.create({
+		data: {
+			title: 'Education'
+		}
+	});
+
+	const healthCategory = await prisma.category.create({
+		data: {
+			title: 'Health & Wellness'
+		}
+	});
+
+	const technologyCategory = await prisma.category.create({
+		data: {
+			title: 'Technology'
+		}
+	});
+
+	const scienceCategory = await prisma.category.create({
+		data: {
+			title: 'Science'
+		}
+	});
+
+	const artsCategory = await prisma.category.create({
+		data: {
+			title: 'Arts'
+		}
+	});
+
+	const entertainmentCategory = await prisma.category.create({
+		data: {
+			title: 'Entertainment'
+		}
+	});
+
+	const sportsCategory = await prisma.category.create({
+		data: {
+			title: 'Sports'
+		}
+	});
+
+	const foodCategory = await prisma.category.create({
+		data: {
+			title: 'Food & Cooking'
+		}
+	});
+
+	const travelCategory = await prisma.category.create({
+		data: {
+			title: 'Travel'
+		}
+	});
+
+	const financeCategory = await prisma.category.create({
+		data: {
+			title: 'Finance'
+		}
+	});
+
+	const newsCategory = await prisma.category.create({
+		data: {
+			title: 'News'
+		}
+	});
+
+	const lifestyleCategory = await prisma.category.create({
+		data: {
+			title: 'Lifestyle'
+		}
+	});
+
 	// Create tags with Tailwind color classes instead of hex values
 	const javascriptTag = await prisma.tag.create({
 		data: {
