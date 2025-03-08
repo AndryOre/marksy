@@ -37,7 +37,8 @@
 		return variant ? (isSelected ? variant.selected : variant.unselected) : '';
 	}
 
-	const visibleTags = $derived(showAllTags ? props.tags : props.tags.slice(0, tagsPerRow));
+	const sortedTags = $derived([...props.tags].sort((a, b) => b.count - a.count));
+	const visibleTags = $derived(showAllTags ? sortedTags : sortedTags.slice(0, tagsPerRow));
 	const hasMoreTags = $derived(props.tags.length > tagsPerRow);
 </script>
 
