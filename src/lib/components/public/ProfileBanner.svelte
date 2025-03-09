@@ -10,6 +10,7 @@
 	import { Link, Linkedin } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
+	import { socialsLinks } from '$lib/constants/socialsLinks';
 
 	type SocialPlatform =
 		| 'instagram'
@@ -43,11 +44,16 @@
 	};
 
 	let socialLinks = $derived(
-		Object.entries(socials).map(([platform, url]) => ({
-			name: platform.charAt(0).toUpperCase() + platform.slice(1),
-			url,
-			icon: socialIcons[platform as SocialPlatform]
-		}))
+		Object.entries(socials)
+			.filter(([_, handle]) => handle !== null)
+			.map(([platform, handle]) => ({
+				name: platform.charAt(0).toUpperCase() + platform.slice(1),
+				url:
+					platform === 'website'
+						? handle
+						: socialsLinks[platform as keyof typeof socialsLinks] + handle,
+				icon: socialIcons[platform as SocialPlatform]
+			}))
 	);
 </script>
 

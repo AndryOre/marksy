@@ -22,7 +22,6 @@
 			goto(baseUrl);
 		}
 	}
-	console.log(user);
 </script>
 
 <div class="flex flex-col">
