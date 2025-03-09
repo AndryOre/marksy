@@ -10,6 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  username     String     @id
+  name         String
+  avatarUrl    String?
+  bannerUrl    String?
+  instagram    String?
+  linkedin     String?
+  x            String?
+  github       String?
+  website      String?
+  twitch       String?
+  youtube      String?
+  tiktok       String?
+  bookmarks    Bookmark[]
+  categories   Category[]
+  tags         Tag[]
+  dateCreated  DateTime   @default(now())
+  dateModified DateTime   @updatedAt
+}
+
 model Bookmark {
   id           String        @id @default(uuid())
   title        String
@@ -18,6 +38,8 @@ model Bookmark {
   imageUrl     String?
   category     Category      @relation(fields: [categoryId], references: [id])
   categoryId   String
+  user         User          @relation(fields: [username], references: [username])
+  username     String
   dateAdded    DateTime      @default(now())
   lastChecked  DateTime?
   isAvailable  Boolean?
@@ -26,22 +48,31 @@ model Bookmark {
   healthChecks HealthCheck[]
 
   @@index([categoryId])
+  @@index([username])
 }
 
 model Category {
   id           String     @id @default(uuid())
   title        String
   bookmarks    Bookmark[]
+  user         User       @relation(fields: [username], references: [username])
+  username     String
   dateAdded    DateTime   @default(now())
   dateModified DateTime   @updatedAt
+
+  @@index([username])
 }
 
 model Tag {
   id        String     @id @default(uuid())
   name      String     @unique
   color     String?
+  user      User       @relation(fields: [username], references: [username])
+  username  String
   dateAdded DateTime   @default(now())
   bookmarks Bookmark[] @relation("BookmarkToTag")
+
+  @@index([username])
 }
 
 model HealthCheck {

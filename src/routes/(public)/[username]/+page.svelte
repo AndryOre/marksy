@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import BookmarkCard from '$lib/components/public/BookmarkCard.svelte';
-	import TagsNav from '$lib/components/public/TagsNav.svelte';
-	import SearchBar from '$lib/components/public/SearchBar.svelte';
-	import SortSelector from '$lib/components/public/SortSelector.svelte';
 	import BookmarkFilters from '$lib/components/public/BookmarkFilters.svelte';
 	import type { Bookmark, Tag } from '@prisma/client';
 	import { format } from 'date-fns';

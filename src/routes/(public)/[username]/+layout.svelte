@@ -9,6 +9,7 @@
 	const categories = $derived(data.categories || []);
 	const selectedCategoryId = $derived(data.selectedCategoryId);
 	const username = $derived(data.username);
+	const user = $derived(data.user);
 
 	function handleSelectCategory(categoryId: string | null) {
 		// Construir la URL base
@@ -21,10 +22,19 @@
 			goto(baseUrl);
 		}
 	}
+	console.log(user);
 </script>
 
 <div class="flex flex-col">
-	<ProfileBanner />
+	{#if user}
+		<ProfileBanner
+			avatarUrl={user.avatarUrl}
+			bannerUrl={user.bannerUrl}
+			name={user.name}
+			handle={user.handle}
+			socials={user.socials}
+		/>
+	{/if}
 	<Sidebar.Provider>
 		<AppSidebar {categories} {selectedCategoryId} onSelectCategory={handleSelectCategory} />
 		<main class="w-full">

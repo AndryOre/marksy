@@ -35,7 +35,7 @@
 		}
 	}
 
-	let marginTopValue = $state(400);
+	let marginTopValue = $state(336);
 	let sidebarElement;
 
 	onMount(() => {
@@ -46,7 +46,7 @@
 				const headerRect = header.getBoundingClientRect();
 				if (headerRect.bottom > 0) {
 					const visibilityRatio = Math.max(0, Math.min(1, headerRect.bottom / headerRect.height));
-					const maxMargin = 400;
+					const maxMargin = 336;
 					marginTopValue = Math.round(maxMargin * visibilityRatio);
 				} else {
 					marginTopValue = 0;
