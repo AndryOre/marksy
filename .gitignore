@@ -27,3 +27,6 @@ vite.config.ts.timestamp-*
 
 # Prisma
 prisma/migrations/*
+
+# Cursor
+context.md
