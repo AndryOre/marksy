@@ -3,7 +3,8 @@ import type { Reroute } from '@sveltejs/kit';
 export const reroute: Reroute = ({ url }) => {
 	const hostname = url.hostname;
 
-	if (hostname === 'marksy.co' || hostname === 'localhost:5173') {
+	// Root domain access (including www)
+	if (hostname === 'marksy.co' || hostname === 'www.marksy.co' || hostname === 'localhost:5173') {
 		return;
 	}
 
