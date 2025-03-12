@@ -19,7 +19,7 @@ export const reroute: Reroute = ({ url }) => {
 			return;
 		}
 
-		return `/${username}${url.pathname}`;
+		return `/app/${username}${url.pathname}`;
 	}
 
 	if (hostname.endsWith('.marksy.co')) {
@@ -33,6 +33,14 @@ export const reroute: Reroute = ({ url }) => {
 			return;
 		}
 
-		return `/${username}${url.pathname}`;
+		return `/app/${username}${url.pathname}`;
+	}
+
+	if (hostname.endsWith('dashboard.localhost')) {
+		return '/app/dashboard';
+	}
+
+	if (hostname.endsWith('dashboard.marksy.co')) {
+		return '/app/dashboard';
 	}
 };
