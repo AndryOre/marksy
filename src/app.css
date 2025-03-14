@@ -73,3 +73,42 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+@layer base {
+	@font-face {
+		font-family: 'Leckerli One';
+		src: local('Leckerli One'), url('/fonts/Leckerli_One/LeckerliOne-Regular.ttf');
+		font-weight: 400;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'Quicksand';
+		src: local('Quicksand'), url('/fonts/Quicksand/Quicksand-Light.ttf');
+		font-weight: 300;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'Quicksand';
+		src: local('Quicksand'), url('/fonts/Quicksand/Quicksand-Regular.ttf');
+		font-weight: 400;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'Quicksand';
+		src: local('Quicksand'), url('/fonts/Quicksand/Quicksand-Medium.ttf');
+		font-weight: 500;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'Quicksand';
+		src: local('Quicksand'), url('/fonts/Quicksand/Quicksand-SemiBold.ttf');
+		font-weight: 600;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: 'Quicksand';
+		src: local('Quicksand'), url('/fonts/Quicksand/Quicksand-Bold.ttf');
+		font-weight: 700;
+		font-display: swap;
+	}
+}
