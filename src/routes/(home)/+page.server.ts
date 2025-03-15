@@ -1,6 +1,6 @@
 import type { PageServerLoad, Actions } from './$types.js';
 import { fail } from '@sveltejs/kit';
-import { superValidate } from 'sveltekit-superforms';
+import { superValidate, message } from 'sveltekit-superforms';
 import { emailSchema } from '$lib/components/public/EmailInput/schema';
 import { zod } from 'sveltekit-superforms/adapters';
 
@@ -35,22 +35,12 @@ export const actions: Actions = {
 			const data = await response.json();
 
 			if (!response.ok) {
-				return fail(400, {
-					form,
-					error: data.message || 'Failed to subscribe'
-				});
+				return message(form, { status: 'error', text: data.message || 'Failed to subscribe' });
 			}
 
-			return {
-				form,
-				success: true
-			};
-		} catch (error) {
-			console.error('Loops API error:', error);
-			return fail(500, {
-				form,
-				error: 'Server error occurred'
-			});
+			return message(form, { status: 'success', text: 'Successfully subscribed!' });
+		} catch {
+			return message(form, { status: 'error', text: 'Server error occurred' });
 		}
 	}
 };

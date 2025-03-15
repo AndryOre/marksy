@@ -3,11 +3,11 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import type { PageData } from './$types.js';
 	import EmailInput from '$lib/components/public/EmailInput/EmailInput.svelte';
+	import { setMode } from 'mode-watcher';
+	import { onMount } from 'svelte';
 
 	let { data }: { data: PageData } = $props();
 
-	import { setMode } from 'mode-watcher';
-	import { onMount } from 'svelte';
 	onMount(() => {
 		setMode('light');
 	});
