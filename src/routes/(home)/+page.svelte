@@ -92,7 +92,9 @@
 
 	<footer class="text-center">
 		<p class="font-medium">
-			Built with ❤️ by <a href="https://andryore.dev" class="font-bold underline">AndryOre</a>
+			Built with ❤️ by <a href="https://andryore.dev" target="_blank" class="font-bold underline"
+				>AndryOre</a
+			>
 		</p>
 	</footer>
 </div>
