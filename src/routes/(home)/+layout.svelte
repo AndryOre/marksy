@@ -17,7 +17,7 @@
 		property="og:description"
 		content="Turn your bookmarks into a public directory in seconds."
 	/>
-	<meta property="og:image" content="{import.meta.env.VITE_BASE_URL}/og.svg" />
+	<meta property="og:image" content="{import.meta.env.VITE_BASE_URL}/og.png" />
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image" />
@@ -27,7 +27,7 @@
 		property="twitter:description"
 		content="Turn your bookmarks into a public directory in seconds."
 	/>
-	<meta property="twitter:image" content="{import.meta.env.VITE_BASE_URL}/og.svg" />
+	<meta property="twitter:image" content="{import.meta.env.VITE_BASE_URL}/og.png" />
 </svelte:head>
 <main>
 	{@render children?.()}
