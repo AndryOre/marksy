@@ -8,7 +8,6 @@
 
 	const categories = $derived(data.categories || []);
 	const selectedCategoryId = $derived(data.selectedCategoryId);
-	const username = $derived(data.username);
 	const user = $derived(data.user);
 
 	function handleSelectCategory(categoryId: string | null) {

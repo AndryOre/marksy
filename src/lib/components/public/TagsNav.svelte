@@ -52,7 +52,7 @@
 
 	{#if props.loading}
 		<div class="flex flex-wrap gap-2">
-			{#each Array(8) as _}
+			{#each [...Array(8).keys()] as i (i)}
 				<Skeleton class="h-6 w-20 rounded-full" />
 			{/each}
 		</div>

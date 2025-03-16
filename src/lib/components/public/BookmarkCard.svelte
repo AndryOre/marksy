@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
-	import { ExternalLink, Image } from 'lucide-svelte';
+	import { ExternalLink } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { cn } from '$lib/utils';
@@ -50,7 +50,7 @@
 				<Skeleton class="h-4 w-2/3" />
 			</div>
 			<div class="flex flex-wrap gap-2">
-				{#each Array(3) as _}
+				{#each [...Array(3).keys()] as i (i)}
 					<Skeleton class="h-6 w-16" />
 				{/each}
 			</div>

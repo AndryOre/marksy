@@ -159,7 +159,7 @@
 
 		{#if loadingBookmarks}
 			<div class="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each Array(6) as _}
+				{#each [...Array(6).keys()] as i (i)}
 					<BookmarkCard title="" url="" tags={[]} dateAdded="" loading={true} />
 				{/each}
 			</div>
@@ -176,7 +176,7 @@
 			</div>
 		{:else}
 			<div class="grid grid-cols-1 gap-6 py-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each filteredBookmarks as bookmark}
+				{#each filteredBookmarks as bookmark (bookmark.id)}
 					<BookmarkCard
 						title={bookmark.title}
 						url={bookmark.url}

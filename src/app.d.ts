@@ -5,6 +5,9 @@ declare global {
 		interface Locals {
 			username?: string;
 			isSubdomain: boolean;
+			user: {
+				username: string;
+			} | null;
 		}
 		// interface Error {}
 		// interface PageData {}

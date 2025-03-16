@@ -32,7 +32,17 @@
 
 	let { avatarUrl, bannerUrl, name, handle, socials }: Props = $props();
 
-	const socialIcons: Record<SocialPlatform, any> = {
+	const socialIcons: Record<
+		SocialPlatform,
+		| typeof SiInstagram
+		| typeof Linkedin
+		| typeof SiX
+		| typeof SiGithub
+		| typeof Link
+		| typeof SiTwitch
+		| typeof SiYoutube
+		| typeof SiTiktok
+	> = {
 		instagram: SiInstagram,
 		linkedin: Linkedin,
 		x: SiX,
@@ -45,7 +55,7 @@
 
 	let socialLinks = $derived(
 		Object.entries(socials)
-			.filter(([_, handle]) => handle !== null)
+			.filter(([, handle]) => handle !== null)
 			.map(([platform, handle]) => ({
 				name: platform.charAt(0).toUpperCase() + platform.slice(1),
 				url:
@@ -85,7 +95,7 @@
 			</div>
 		</div>
 		<div class="flex flex-wrap justify-center gap-2 md:flex-row md:justify-end">
-			{#each socialLinks as link}
+			{#each socialLinks as link (link.name)}
 				<a href={link.url} target="_blank" rel="noopener noreferrer">
 					<Button variant="ghost" size="icon" tooltip={link.name}>
 						<link.icon />
