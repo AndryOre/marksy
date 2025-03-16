@@ -12,15 +12,15 @@
 	const user = $derived(data.user);
 
 	function handleSelectCategory(categoryId: string | null) {
-		// Construir la URL base
-		const baseUrl = `/${username}`;
+		const currentUrl = new URL(window.location.href);
 
-		// Añadir el parámetro de categoría si existe
 		if (categoryId) {
-			goto(`${baseUrl}?category=${categoryId}`);
+			currentUrl.searchParams.set('category', categoryId);
 		} else {
-			goto(baseUrl);
+			currentUrl.searchParams.delete('category');
 		}
+
+		goto(currentUrl.pathname + currentUrl.search);
 	}
 </script>
 
