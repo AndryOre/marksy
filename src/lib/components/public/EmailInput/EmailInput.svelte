@@ -30,8 +30,7 @@
 				</Badge>
 				<Card.Description>
 					We'll keep you posted at
-					<span class="mt-1 block font-medium text-primary hover:underline">andryfpo@gmail.com</span
-					>
+					<span class="mt-1 block font-medium text-primary hover:underline">{$formData.email}</span>
 				</Card.Description>
 			</Card.Content>
 		</Card.Root>
