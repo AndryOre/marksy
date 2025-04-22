@@ -1,0 +1,8 @@
+---
+description: Util functions
+globs: 
+alwaysApply: false
+---
+# Utility Functions
+
+- Create utility functions in `src/lib/` folder for reusable logic

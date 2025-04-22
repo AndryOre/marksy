@@ -1,0 +1,15 @@
+---
+description: How to use Prisma
+globs: 
+alwaysApply: false
+---
+# Prisma Usage
+
+We use PostgreSQL.
+
+The prisma file is located at: `prisma/schema.prisma`.
+
+## Docs
+
+https://www.prisma.io/docs/llms.txt
+https://www.prisma.io/docs/llms-full.txt

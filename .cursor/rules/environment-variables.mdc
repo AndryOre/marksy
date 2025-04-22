@@ -1,0 +1,57 @@
+---
+description: Add environment variable
+globs: 
+alwaysApply: false
+---
+# Environment Variables
+
+This is how we add environment variables to the project:
+
+  1. Add to `.env.example`:
+      ```bash
+      NEW_VARIABLE=value_example
+      ```
+
+  2. Add to `src/env.js`:
+      ```javascript
+      // For server-only variables
+      server: {
+        NEW_VARIABLE: z.string(),
+      }
+      // For client-side variables
+      client: {
+        NEXT_PUBLIC_NEW_VARIABLE: z.string(),
+      }
+      ```
+
+  3. For client-side variables:
+      - Must be prefixed with `NEXT_PUBLIC_`
+
+examples:
+  - input: |
+      # Adding a server-side API key
+      # .env.example
+      API_KEY=your_api_key_here
+
+      # env.ts
+      server: {
+        API_KEY: z.string(),
+      }
+
+    output: "Server-side environment variable properly added"
+
+  - input: |
+      # Adding a client-side feature flag
+      # .env.example
+      NEXT_PUBLIC_FEATURE_ENABLED=false
+
+      # env.ts
+      client: {
+        NEXT_PUBLIC_FEATURE_ENABLED: z.coerce.boolean().default(false),
+      }
+
+    output: "Client-side environment variable properly added"
+
+references:
+  - src/env.jss
+  - .env.example
