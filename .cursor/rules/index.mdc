@@ -19,7 +19,6 @@ Fundamental project structure, setup, and general development guidelines.
 | @environment-variables.mdc         | Add environment variable                                    |
 | @utilities.mdc                     | Util functions                                              |
 | @task-list.mdc                     | Guidelines for creating and managing task lists             |
-| [nextjs.mdc](mdc:.cursor/rules/nextjs.mdc)                        | NextJS guidelines                                           |
 
 ## Frontend & UI
 
