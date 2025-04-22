@@ -14,79 +14,61 @@ datasource db {
 }
 
 model User {
-  username     String     @id
-  name         String
-  avatarUrl    String?
-  bannerUrl    String?
-  instagram    String?
-  linkedin     String?
-  x            String?
-  github       String?
-  website      String?
-  twitch       String?
-  youtube      String?
-  tiktok       String?
-  bookmarks    Bookmark[]
-  categories   Category[]
-  tags         Tag[]
-  dateCreated  DateTime   @default(now())
-  dateModified DateTime   @updatedAt
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
 }
 
-model Bookmark {
-  id           String        @id @default(uuid())
-  title        String
-  url          String
-  description  String?
-  imageUrl     String?
-  category     Category      @relation(fields: [categoryId], references: [id])
-  categoryId   String
-  user         User          @relation(fields: [username], references: [username])
-  username     String
-  dateAdded    DateTime      @default(now())
-  lastChecked  DateTime?
-  isAvailable  Boolean?
-  isPrivate    Boolean       @default(false)
-  tags         Tag[]         @relation("BookmarkToTag")
-  healthChecks HealthCheck[]
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([categoryId])
-  @@index([username])
+  @@unique([token])
+  @@map("session")
 }
 
-model Category {
-  id           String     @id @default(uuid())
-  title        String
-  bookmarks    Bookmark[]
-  user         User       @relation(fields: [username], references: [username])
-  username     String
-  dateAdded    DateTime   @default(now())
-  dateModified DateTime   @updatedAt
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
 
-  @@index([username])
+  @@map("account")
 }
 
-model Tag {
-  id        String     @id @default(uuid())
-  name      String     @unique
-  color     String?
-  user      User       @relation(fields: [username], references: [username])
-  username  String
-  dateAdded DateTime   @default(now())
-  bookmarks Bookmark[] @relation("BookmarkToTag")
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
 
-  @@index([username])
-}
-
-model HealthCheck {
-  id           String   @id @default(uuid())
-  bookmark     Bookmark @relation(fields: [bookmarkId], references: [id])
-  bookmarkId   String
-  timestamp    DateTime @default(now())
-  status       Boolean
-  statusCode   Int?
-  responseTime Int?
-  error        String?
-
-  @@index([bookmarkId])
+  @@map("verification")
 }
