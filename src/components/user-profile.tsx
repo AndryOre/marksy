@@ -1,13 +1,11 @@
-import { headers } from 'next/headers'
+'use client'
 
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { auth } from '@/server/auth'
+import { authClient } from '@/lib/auth-client'
 
-export async function UserProfile() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  })
+export function UserProfile() {
+  const { data: session } = authClient.useSession()
 
   if (!session || !session.user) {
     return <div>No session found</div>
@@ -40,6 +38,10 @@ export async function UserProfile() {
               Not Verified
             </Badge>
           )}
+        </div>
+        <div className="flex flex-col space-y-2">
+          <span className="text-muted-foreground text-sm">Onboarding</span>
+          <span className="font-medium">{session.user.onboarding}</span>
         </div>
       </CardContent>
     </Card>

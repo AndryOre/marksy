@@ -151,8 +151,6 @@ export function SignIn() {
     const result = await signIn.social({
       provider,
       callbackURL: '/dashboard',
-      errorCallbackURL: '/error',
-      newUserCallbackURL: '/welcome',
     })
     return result
   }

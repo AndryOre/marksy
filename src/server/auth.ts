@@ -28,4 +28,14 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     },
   },
+  user: {
+    additionalFields: {
+      onboarding: {
+        type: 'string',
+        defaultValue: 'not_started',
+        required: true,
+        input: false,
+      },
+    },
+  },
 })
