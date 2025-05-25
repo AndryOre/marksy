@@ -32,7 +32,7 @@ export const auth = betterAuth({
     additionalFields: {
       onboarding: {
         type: 'string',
-        defaultValue: 'not_started',
+        defaultValue: 'NOT_STARTED',
         required: true,
         input: false,
       },
